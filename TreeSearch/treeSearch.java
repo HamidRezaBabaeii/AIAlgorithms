@@ -37,18 +37,21 @@ public class treeSearch {
             System.out.print("\n");
         }
 
+        if(proximitySize>0){ // if we have at least one node (it'll be root)
+           System.out.println("We don't have any node.");
+           return;
+        }
         
         // create new object from Fringe
-         Fringe fringe;
-        if(proximitySize>0){ // if we have at least one node (it'll be root)
-            Integer num = null;
-            fringe = new Fringe(0, null, num, num, 0, 0); // the root node 
-        }
+        Fringe fringe;
+        Integer num = null;
+        fringe = new Fringe(0, null, num, num, 0, 0); // the root node 
+
         
         // check fringe
         while(!fringe.get_Fringe().isEmpty())
         {
-
+            
         }
     }
 
