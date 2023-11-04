@@ -5,13 +5,13 @@ public class Node {
    private int nodeNum ;
    private String nodeState;
    private int nodeParent;
-   private int nodeAction;
+   private int[] nodeAction;
    private float pathCost;
    private int nodeDepth;
 
  
 
-    public Node(int nodeNum, String nodeState, int nodeParent, int nodeAction, float pathCost, int nodeDepth){
+    public Node(int nodeNum, String nodeState, int nodeParent, int[] nodeAction, float pathCost, int nodeDepth){
         this.nodeNum = nodeNum;
         this.nodeState = nodeState;
         this.nodeParent = nodeParent;
@@ -43,11 +43,11 @@ public class Node {
         this.nodeParent = nodeParent;
     }
 
-    public int getNodeAction() {
+    public int[] getNodeAction() {
         return this.nodeAction;
     }
 
-    public void setNodeAction(int nodeAction) {
+    public void setNodeAction(int[] nodeAction) {
         this.nodeAction = nodeAction;
     }
 
