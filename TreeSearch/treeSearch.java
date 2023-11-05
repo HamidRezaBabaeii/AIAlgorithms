@@ -61,11 +61,11 @@ public class treeSearch {
         // create new object from Fringe
         Fringe fringe;
         //Integer num = null;
-        int start_node_actions[] = new int[proximitySize];
+        ArrayList<Integer> start_node_actions = new ArrayList<>();
         for(int i=0 ; i<proximitySize ; i++){
-            start_node_actions[i] = proximityArray[start_node][i];
+            start_node_actions.add(proximityArray[start_node][i]);
         }
-        fringe = new Fringe(start_node, null, -1, start_node_actions, 0, 0); // the root node 
+        fringe = new Fringe(start_node, '0', -1, start_node_actions, 0, 0); // the root node 
 
         
         //check fringe
@@ -73,7 +73,7 @@ public class treeSearch {
         {
             Node test_Node = fringe.get_Fringe().get(0);
             fringe.get_Fringe().remove(0);
-            if(goal_node == test_Node.getNodeDepth()){
+            if((char)goal_node == test_Node.getNodeState()){
                 Expand expand = new Expand();
 
                 //show expanded nodes

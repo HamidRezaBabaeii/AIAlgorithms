@@ -12,13 +12,13 @@ public class Expand {
     //constructor
     public Expand(Node node , int[][] proximityArray){
         this.expand_Nodes.add(node);
-        for(int i=0 ; i< node.getNodeAction().length; i++){
-            if(node.getNodeAction()[i]!=0){
-                int node_actions[] = new int[proximityArray.length];
+        for(int i=0 ; i< node.getNodeAction().size(); i++){
+            if(node.getNodeAction().get(i)!=0){
+                ArrayList<Integer> node_actions = new ArrayList<>();
                 for(int j=0 ; j<proximityArray.length ; j++){
-                    node_actions[j] = proximityArray[counterNodeNumber][j];
+                    node_actions.add(proximityArray[counterNodeNumber][j]);
                 }
-                new Fringe(counterNodeNumber, null, node.getNodeNum(), node_actions, node.getNodeAction()[i], counterDepth);
+                new Fringe(counterNodeNumber, (char)(i), node.getNodeNum(), node_actions, node.getNodeAction().get(i), counterDepth);
                 counterNodeNumber++;
                 counterDepth++;
             }
