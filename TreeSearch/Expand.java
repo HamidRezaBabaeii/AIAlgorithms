@@ -24,5 +24,9 @@ public class Expand {
             }
         }
     }
+
+    public  ArrayList<Node> show_expandNodes(){
+        return expand_Nodes;
+    }
     
 }
