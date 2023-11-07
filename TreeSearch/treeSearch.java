@@ -7,9 +7,8 @@ import java.util.Scanner;
 
 public class treeSearch {
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         Scanner getValue = new Scanner(System.in);
-
         // get matrix size
         System.out.print("Enter number of Nodes:");
         int proximitySize = getValue.nextInt();
@@ -61,11 +60,11 @@ public class treeSearch {
         // create new object from Fringe
         Fringe fringe;
         //Integer num = null;
-        ArrayList<Integer> start_node_actions = new ArrayList<>();
+        ArrayList<Integer> start_node_actions = new ArrayList<Integer>();
         for(int i=0 ; i<proximitySize ; i++){
             start_node_actions.add(proximityArray[start_node][i]);
         }
-        fringe = new Fringe(start_node, '0', -1, start_node_actions, 0, 0); // the root node 
+        fringe = new Fringe('0', null, 0, 0); // the root node 
 
         
         //check fringe
@@ -74,8 +73,8 @@ public class treeSearch {
             Node test_Node = fringe.get_Fringe().get(0);
             fringe.get_Fringe().remove(0);
             if((char)goal_node == test_Node.getNodeState()){
-                Expand expand = new Expand();
 
+                Expand expand = new Expand();
                 //show expanded nodes
                 System.out.println("\n Show expanded nodes:");
                 for(int i=0 ; i<expand.show_expandNodes_numbers().size();i++){
@@ -87,7 +86,8 @@ public class treeSearch {
                 
                 
             }else{
-                new Expand(test_Node , proximityArray);
+               Expand ex =  new Expand(test_Node , proximityArray);
+               ex.show_expandNodes_numbers();
             }
             
         }

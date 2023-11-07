@@ -6,8 +6,8 @@ public class Fringe {
     
     private ArrayList<Node> node = new ArrayList<Node>();
     
-    public Fringe(int nodeNum, char nodeState, int nodeParent, ArrayList<Integer> nodeAction, float pathCost, int nodeDepth){
-        Node node_class = new Node(nodeNum,nodeState,nodeParent,nodeAction,pathCost,nodeDepth);
+    public Fringe(char nodeState, Node nodeParent, float pathCost, int nodeDepth){
+        Node node_class = new Node(nodeState,nodeParent,pathCost,nodeDepth);
         this.node.add(node_class);
         if(node.size()>1){
             Sort_ArrayList(node);

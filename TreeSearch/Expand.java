@@ -5,21 +5,15 @@ import java.util.ArrayList;
 public class Expand {
 
     // variables 
-    private ArrayList<Node> expand_Nodes = new ArrayList<>();
+    private ArrayList<Node> expand_Nodes = new ArrayList<Node>();
     private int counterDepth = 1 ;
-    private int counterNodeNumber = 1;
 
     //constructor
     public Expand(Node node , int[][] proximityArray){
         this.expand_Nodes.add(node);
-        for(int i=0 ; i< node.getNodeAction().size(); i++){
-            if(node.getNodeAction().get(i)!=0){
-                ArrayList<Integer> node_actions = new ArrayList<>();
-                for(int j=0 ; j<proximityArray.length ; j++){
-                    node_actions.add(proximityArray[counterNodeNumber][j]);
-                }
-                new Fringe(counterNodeNumber, (char)(i), node.getNodeNum(), node_actions, node.getNodeAction().get(i), counterDepth);
-                counterNodeNumber++;
+        for(int i=0 ; i< proximityArray.length; i++){
+            if(proximityArray[(int)node.getNodeState()][i]!=0){
+                new Fringe( (char)(i), node, proximityArray[(int)node.getNodeState()][i], counterDepth);
                 counterDepth++;
             }
         }
@@ -36,11 +30,11 @@ public class Expand {
     }
 
     // returns node nums
-    public  ArrayList<Integer> show_expandNodes_numbers(){
+    public  ArrayList<Character> show_expandNodes_numbers(){
 
-        ArrayList<Integer> nodeNums = new ArrayList<>();
+        ArrayList<Character> nodeNums = new ArrayList<>();
         for(int i=0 ; i<expand_Nodes.size();i++){
-            nodeNums.add(expand_Nodes.get(i).getNodeNum());
+            nodeNums.add(expand_Nodes.get(i).getNodeState());
         }
         return nodeNums;
     }
