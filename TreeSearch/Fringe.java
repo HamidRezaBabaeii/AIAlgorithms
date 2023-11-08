@@ -17,19 +17,25 @@ public class Fringe {
         return node;
     }
 
-    // add function
-    public void add_new_node(Node pushNode){
+    // add function(for BFS)
+    public void add_new_node_BFS(Node pushNode){
+        node.add(pushNode);
+    }
+
+    // add function(for UCS)
+    public void add_new_node_UCS(Node pushNode){
         node.add(pushNode);
         if(node.size()>1){
             Sort_ArrayList(node);
         }
     }
 
+
     // sort the node arraylist
     private static void Sort_ArrayList(ArrayList<Node> node){
         for(int i=0 ; i<node.size(); i++){
             for(int j=i ; j<node.size();j++){
-                if(node.get(i).getNodeDepth()>node.get(j).getNodeDepth()){
+                if(node.get(i).getPathCost()>node.get(j).getPathCost()){
                     Node swapNodei = node.get(i);
                     Node swaNodej = node.get(j);
                     node.set(i, swaNodej);

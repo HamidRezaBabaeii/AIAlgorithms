@@ -53,16 +53,16 @@ public class treeSearch {
         System.out.println();
 
         // create new object from Fringe
-        Fringe fringe;
-        fringe = new Fringe(start_node, null, 0, 0); // the root node
-
+        Fringe fringe1, fringe2;
+        fringe1 = new Fringe(start_node, null, 0, 0); // the root node
+        fringe2 = new Fringe(start_node, null, 0, 0); // the root node
         // check
         Expand expand = new Expand();
 
-        // check fringe
-        while (!fringe.get_Fringe().isEmpty()) {
-            Node test_Node = fringe.get_Fringe().get(0);
-            fringe.get_Fringe().remove(0);
+        // check fringe BFS
+        while (!fringe1.get_Fringe().isEmpty()) {
+            Node test_Node = fringe1.get_Fringe().get(0);
+            fringe1.get_Fringe().remove(0);
             if (goal_node == test_Node.getNodeState()) {
                 // show expanded nodes
                 show_expandedNodes_BFS(expand);
@@ -70,13 +70,30 @@ public class treeSearch {
                 Node path = test_Node;
                 show_path_BFS(path);
                 break;
-
             } else {
-                expand.add_expand(test_Node, proximityArray, fringe);
+                expand.add_expand_BFS(test_Node, proximityArray, fringe1);
             }
-
         }
+
+        // check frienge UCS
+        while (!fringe2.get_Fringe().isEmpty()) {
+            Node test_Node = fringe2.get_Fringe().get(0);
+            fringe2.get_Fringe().remove(0);
+            if (goal_node == test_Node.getNodeState()) {
+                // show expanded nodes
+                show_expandedNodes_UCS(expand);
+                // show path
+                Node path = test_Node;
+                show_path_UCS(path);
+                break;
+            } else {
+                expand.add_expand_UCS(test_Node, proximityArray, fringe2);
+            }
+        }
+
     }
+
+    // -------------------------------- our methods for show matrix and expanded nodes and path --------------------------------------------------
 
     public static void show_Nodes(int matrixSize) {
         System.out.println();
@@ -90,30 +107,63 @@ public class treeSearch {
         System.out.println("Please First Select Start Node Number Then Select Goal Node Number:");
     }
 
-    public static void show_expandedNodes_BFS(Expand expand){
+    // BFS expanded nodes
+    public static void show_expandedNodes_BFS(Expand expand) {
         System.out.println("\nShow expanded nodes:");
-        for (int i = 0; i < expand.show_expandNodes_state().size(); i++) {
-            System.out.print(expand.show_expandNodes_state().get(i));
-            if(i!=expand.show_expandNodes_state().size()-1){
+        for (int i = 0; i < expand.show_expandNodes_state_BFS().size(); i++) {
+            System.out.print(expand.show_expandNodes_state_BFS().get(i));
+            if (i != expand.show_expandNodes_state_BFS().size() - 1) {
                 System.out.print("-->");
             }
         }
         System.out.println("");
     }
 
-    public static void show_path_BFS(Node path){
+    // BFS algorithm Path
+    public static void show_path_BFS(Node path) {
         System.out.println("\nShow path:");
         ArrayList<Node> full_path = new ArrayList<>();
         while (path != null) {
             full_path.add(path);
             path = path.getNodeParent();
         }
-        for(int i=full_path.size()-1; i>=0 ; i--){
-            System.out.print("Node:"+full_path.get(i).getNodeState());
-            if(i!=0){
+        for (int i = full_path.size() - 1; i >= 0; i--) {
+            System.out.print("Node:" + full_path.get(i).getNodeState());
+            if (i != 0) {
                 System.out.print("-->");
             }
         }
         System.out.println();
     }
+
+    // UCS expanded nodes
+    public static void show_expandedNodes_UCS(Expand expand) {
+        System.out.println("\nShow expanded nodes:");
+        for (int i = 0; i < expand.show_expandNodes_state_UCS().size(); i++) {
+            System.out.print(expand.show_expandNodes_state_UCS().get(i));
+            if (i != expand.show_expandNodes_state_UCS().size() - 1) {
+                System.out.print("-->");
+            }
+        }
+        System.out.println("");
+    }
+
+    // UCS algorithm nodes
+    public static void show_path_UCS(Node path) {
+        System.out.println("\nShow path:");
+        ArrayList<Node> full_path = new ArrayList<>();
+        while (path != null) {
+            full_path.add(path);
+            path = path.getNodeParent();
+        }
+        for (int i = full_path.size() - 1; i >= 0; i--) {
+            System.out.print("Node:" + full_path.get(i).getNodeState());
+            if (i != 0) {
+                System.out.print("-->");
+            }
+        }
+        System.out.println();
+    }
+
+// -------------------------------------------------------------------------------------------------------------------------------------------------
 }
