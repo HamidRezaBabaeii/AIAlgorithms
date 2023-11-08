@@ -1,28 +1,27 @@
 package AIAlgorithms.TreeSearch;
 
-import java.util.ArrayList;
 
 public class Node {
 
 
-   private char nodeState;
+   private int nodeState;
    private Node nodeParent;
    private float pathCost;
    private int nodeDepth;
  
 
-    public Node( char nodeState, Node nodeParent, float pathCost, int nodeDepth){
+    public Node( int nodeState, Node nodeParent, float pathCost, int nodeDepth){
         this.nodeState = nodeState;
         this.nodeParent = nodeParent;
         this.pathCost = pathCost;
         this.nodeDepth = nodeDepth;
     }
 
-    public char getNodeState() {
+    public int getNodeState() {
         return this.nodeState;
     }
 
-    public void setNodeState(char nodeState) {
+    public void setNodeState(int nodeState) {
         this.nodeState = nodeState;
     }
 

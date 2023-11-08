@@ -1,12 +1,13 @@
 package AIAlgorithms.TreeSearch;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 //BFS 
 
 public class treeSearch {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Scanner getValue = new Scanner(System.in);
         // get matrix size
         System.out.print("Enter number of Nodes:");
@@ -36,15 +37,12 @@ public class treeSearch {
             System.out.print("\n");
         }
 
-
         // check the matrix size
-        if(proximitySize==0){ // if we have at least one node (it'll be root)
-           System.out.println();
-           System.out.println("We don't have any node.");
-           return;
+        if (proximitySize == 0) { // if we have at least one node (it'll be root)
+            System.out.println();
+            System.out.println("We don't have any node.");
+            return;
         }
-        
-
 
         // show node names then select one of them for Start and another one for Goal.
         show_Nodes(proximitySize);
@@ -54,51 +52,68 @@ public class treeSearch {
         int goal_node = getValue.nextInt();
         System.out.println();
 
-
-
         // create new object from Fringe
         Fringe fringe;
-        fringe = new Fringe((char)start_node, null, 0, 0); // the root node 
+        fringe = new Fringe(start_node, null, 0, 0); // the root node
 
-        
-        //check fringe
-        while(!fringe.get_Fringe().isEmpty())
-        {
+        // check
+        Expand expand = new Expand();
+
+        // check fringe
+        while (!fringe.get_Fringe().isEmpty()) {
             Node test_Node = fringe.get_Fringe().get(0);
             fringe.get_Fringe().remove(0);
-            if((char)goal_node == test_Node.getNodeState()){
+            if (goal_node == test_Node.getNodeState()) {
+                // show expanded nodes
+                show_expandedNodes(expand);
+                // show path
+                Node path = test_Node;
+                show_path(path);
+                break;
 
-                Expand expand = new Expand();
-                //show expanded nodes
-                System.out.println("\n Show expanded nodes:");
-                for(int i=0 ; i<expand.show_expandNodes_state().size();i++){
-                    System.out.print(expand.show_expandNodes_state().get(i)+"-->");
-                }
-                System.out.println("");
-
-                //show path
-                
-                
-            }else{
-                System.out.println((int)test_Node.getNodeState()-48);
-               Expand ex =  new Expand(test_Node , proximityArray);
-               ex.show_expandNodes_state();
+            } else {
+                expand.add_expand(test_Node, proximityArray, fringe);
             }
-            
+
         }
     }
 
-
-    public static void show_Nodes(int matrixSize){
+    public static void show_Nodes(int matrixSize) {
         System.out.println();
         int char_Start = 65;
-        for(int i=0 ; i < matrixSize ; i++){
-            System.out.print("Node "+i+" = "+(char)(char_Start+i)+"\t");
-            if(i!=0 && i%5==0){
+        for (int i = 0; i < matrixSize; i++) {
+            System.out.print("Node " + i + " = " + (char) (char_Start + i) + "\t");
+            if (i != 0 && i % 5 == 0) {
                 System.out.println("");
             }
         }
         System.out.println("Please First Select Start Node Number Then Select Goal Node Number:");
     }
 
+    public static void show_expandedNodes(Expand expand){
+        System.out.println("\nShow expanded nodes:");
+        for (int i = 0; i < expand.show_expandNodes_state().size(); i++) {
+            System.out.print(expand.show_expandNodes_state().get(i));
+            if(i!=expand.show_expandNodes_state().size()-1){
+                System.out.print("-->");
+            }
+        }
+        System.out.println("");
+    }
+
+    public static void show_path(Node path){
+        System.out.println("\nShow path:");
+        ArrayList<Node> full_path = new ArrayList<>();
+        while (path != null) {
+            full_path.add(path);
+            path = path.getNodeParent();
+        }
+        for(int i=full_path.size()-1; i>=0 ; i--){
+            System.out.print("Node:"+full_path.get(i).getNodeState());
+            if(i!=0){
+                System.out.print("-->");
+            }
+        }
+        System.out.println();
+    }
 }

@@ -6,17 +6,23 @@ public class Fringe {
     
     private ArrayList<Node> node = new ArrayList<Node>();
     
-    public Fringe(char nodeState, Node nodeParent, float pathCost, int nodeDepth){
+    public Fringe(int nodeState, Node nodeParent, float pathCost, int nodeDepth){
         Node node_class = new Node(nodeState,nodeParent,pathCost,nodeDepth);
         this.node.add(node_class);
-        if(node.size()>1){
-            Sort_ArrayList(node);
-        }
+
     }
 
     // return node
     public ArrayList<Node> get_Fringe(){
         return node;
+    }
+
+    // add function
+    public void add_new_node(Node pushNode){
+        node.add(pushNode);
+        if(node.size()>1){
+            Sort_ArrayList(node);
+        }
     }
 
     // sort the node arraylist
