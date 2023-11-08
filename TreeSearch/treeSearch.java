@@ -80,6 +80,7 @@ public class treeSearch {
                 
                 
             }else{
+                System.out.println((int)test_Node.getNodeState()-48);
                Expand ex =  new Expand(test_Node , proximityArray);
                ex.show_expandNodes_state();
             }
