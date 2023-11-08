@@ -8,7 +8,7 @@ public class Expand {
     private ArrayList<Node> expand_Nodes_BFS = new ArrayList<Node>();
     private ArrayList<Node> expand_Nodes_UCS = new ArrayList<Node>();
     private int counterDepth = 1;
-    private float g = 0;
+    
 
     // null constructor
     public Expand() {
@@ -30,10 +30,10 @@ public class Expand {
     // UCS expand methods
     public void add_expand_UCS(Node node, int[][] proximityArray, Fringe fringe) {
         this.expand_Nodes_UCS.add(node);
-        g = g + node.getPathCost();
+        
         for (int i = 0; i < proximityArray.length; i++) {
             if (proximityArray[node.getNodeState()][i] != 0) {
-                Node new_node = new Node(i, node, g + proximityArray[node.getNodeState()][i], 0);
+                Node new_node = new Node(i, node, node.getPathCost() + proximityArray[node.getNodeState()][i], 0);
                 fringe.add_new_node_UCS(new_node);
             }
         }

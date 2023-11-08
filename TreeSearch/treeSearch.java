@@ -59,6 +59,8 @@ public class treeSearch {
         // check
         Expand expand = new Expand();
 
+        System.out.println("\n-----------BFS :----------------");
+
         // check fringe BFS
         while (!fringe1.get_Fringe().isEmpty()) {
             Node test_Node = fringe1.get_Fringe().get(0);
@@ -74,6 +76,8 @@ public class treeSearch {
                 expand.add_expand_BFS(test_Node, proximityArray, fringe1);
             }
         }
+
+        System.out.println("\n-----------UCS :----------------");
 
         // check frienge UCS
         while (!fringe2.get_Fringe().isEmpty()) {
