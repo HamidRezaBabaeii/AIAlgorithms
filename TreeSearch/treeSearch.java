@@ -65,10 +65,10 @@ public class treeSearch {
             fringe.get_Fringe().remove(0);
             if (goal_node == test_Node.getNodeState()) {
                 // show expanded nodes
-                show_expandedNodes(expand);
+                show_expandedNodes_BFS(expand);
                 // show path
                 Node path = test_Node;
-                show_path(path);
+                show_path_BFS(path);
                 break;
 
             } else {
@@ -90,7 +90,7 @@ public class treeSearch {
         System.out.println("Please First Select Start Node Number Then Select Goal Node Number:");
     }
 
-    public static void show_expandedNodes(Expand expand){
+    public static void show_expandedNodes_BFS(Expand expand){
         System.out.println("\nShow expanded nodes:");
         for (int i = 0; i < expand.show_expandNodes_state().size(); i++) {
             System.out.print(expand.show_expandNodes_state().get(i));
@@ -101,7 +101,7 @@ public class treeSearch {
         System.out.println("");
     }
 
-    public static void show_path(Node path){
+    public static void show_path_BFS(Node path){
         System.out.println("\nShow path:");
         ArrayList<Node> full_path = new ArrayList<>();
         while (path != null) {
