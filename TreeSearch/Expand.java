@@ -12,11 +12,11 @@ public class Expand {
     public Expand(Node node , int[][] proximityArray){
         this.expand_Nodes.add(node);
         for(int i=0 ; i< proximityArray.length; i++){
-            if(proximityArray[(int)node.getNodeState()][i]!=0){
-                new Fringe( (char)(i), node, proximityArray[(int)node.getNodeState()][i], counterDepth);
-                counterDepth++;
+            if(proximityArray[(int)node.getNodeState()-48][i]!=0){
+                new Fringe( (char)(i), node, proximityArray[(int)node.getNodeState()-48][i], counterDepth);
             }
         }
+        counterDepth++;
     }
 
     //null constructor
@@ -30,7 +30,7 @@ public class Expand {
     }
 
     // returns node nums
-    public  ArrayList<Character> show_expandNodes_numbers(){
+    public  ArrayList<Character> show_expandNodes_state(){
 
         ArrayList<Character> nodeNums = new ArrayList<>();
         for(int i=0 ; i<expand_Nodes.size();i++){

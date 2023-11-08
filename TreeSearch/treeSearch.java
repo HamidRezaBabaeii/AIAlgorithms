@@ -1,6 +1,5 @@
 package AIAlgorithms.TreeSearch;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 //BFS 
@@ -59,12 +58,7 @@ public class treeSearch {
 
         // create new object from Fringe
         Fringe fringe;
-        //Integer num = null;
-        ArrayList<Integer> start_node_actions = new ArrayList<Integer>();
-        for(int i=0 ; i<proximitySize ; i++){
-            start_node_actions.add(proximityArray[start_node][i]);
-        }
-        fringe = new Fringe('0', null, 0, 0); // the root node 
+        fringe = new Fringe((char)start_node, null, 0, 0); // the root node 
 
         
         //check fringe
@@ -77,8 +71,8 @@ public class treeSearch {
                 Expand expand = new Expand();
                 //show expanded nodes
                 System.out.println("\n Show expanded nodes:");
-                for(int i=0 ; i<expand.show_expandNodes_numbers().size();i++){
-                    System.out.print(expand.show_expandNodes_numbers().get(i)+"-->");
+                for(int i=0 ; i<expand.show_expandNodes_state().size();i++){
+                    System.out.print(expand.show_expandNodes_state().get(i)+"-->");
                 }
                 System.out.println("");
 
@@ -87,7 +81,7 @@ public class treeSearch {
                 
             }else{
                Expand ex =  new Expand(test_Node , proximityArray);
-               ex.show_expandNodes_numbers();
+               ex.show_expandNodes_state();
             }
             
         }
