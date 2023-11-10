@@ -7,7 +7,7 @@ public class Expand {
     // variables
     private ArrayList<Node> expand_Nodes_BFS = new ArrayList<Node>();
     private ArrayList<Node> expand_Nodes_UCS = new ArrayList<Node>();
-    private int counterDepth = 1;
+    // private int counterDepth = 1;
     
 
     // null constructor
@@ -20,11 +20,11 @@ public class Expand {
         this.expand_Nodes_BFS.add(node);
         for (int i = 0; i < proximityArray.length; i++) {
             if (proximityArray[node.getNodeState()][i] != 0) {
-                Node new_node = new Node(i, node, proximityArray[node.getNodeState()][i], counterDepth);
+                Node new_node = new Node(i, node, proximityArray[node.getNodeState()][i], node.getNodeDepth()+1);
                 fringe.add_new_node_BFS(new_node);
             }
         }
-        counterDepth++;
+        // counterDepth++;
     }
 
     // UCS expand methods
@@ -33,7 +33,7 @@ public class Expand {
         
         for (int i = 0; i < proximityArray.length; i++) {
             if (proximityArray[node.getNodeState()][i] != 0) {
-                Node new_node = new Node(i, node, node.getPathCost() + proximityArray[node.getNodeState()][i], 0);
+                Node new_node = new Node(i, node, node.getPathCost() + proximityArray[node.getNodeState()][i], node.getNodeDepth()+1);
                 fringe.add_new_node_UCS(new_node);
             }
         }

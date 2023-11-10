@@ -52,52 +52,60 @@ public class treeSearch {
         int goal_node = getValue.nextInt();
         System.out.println();
 
+
+    // ----------------------------------------------Our main search methods------------------------------------------
+
         // create new object from Fringe
         Fringe fringe1, fringe2;
         fringe1 = new Fringe(start_node, null, 0, 0); // the root node
         fringe2 = new Fringe(start_node, null, 0, 0); // the root node
         // check
         Expand expand = new Expand();
+        System.out.println("\n\nChoose Search Algorithm(write BFS or UCS or BU for execute both):");
+        String chooseAlgorithms = getValue.next();
 
-        System.out.println("\n-----------BFS :----------------");
+        if (chooseAlgorithms.equals("BFS") || chooseAlgorithms.equals("BU")) {
+            System.out.println("\n-----------BFS :----------------");
 
-        // check fringe BFS
-        while (!fringe1.get_Fringe().isEmpty()) {
-            Node test_Node = fringe1.get_Fringe().get(0);
-            fringe1.get_Fringe().remove(0);
-            if (goal_node == test_Node.getNodeState()) {
-                // show expanded nodes
-                show_expandedNodes_BFS(expand);
-                // show path
-                Node path = test_Node;
-                show_path_BFS(path);
-                break;
-            } else {
-                expand.add_expand_BFS(test_Node, proximityArray, fringe1);
+            // check fringe BFS
+            while (!fringe1.get_Fringe().isEmpty()) {
+                Node test_Node = fringe1.get_Fringe().get(0);
+                fringe1.get_Fringe().remove(0);
+                if (goal_node == test_Node.getNodeState()) {
+                    // show expanded nodes
+                    show_expandedNodes_BFS(expand);
+                    // show path
+                    Node path = test_Node;
+                    show_path_BFS(path);
+                    break;
+                } else {
+                    expand.add_expand_BFS(test_Node, proximityArray, fringe1);
+                }
             }
         }
+        if (chooseAlgorithms.equals("UCS") || chooseAlgorithms.equals("BU")) {
+            System.out.println("\n-----------UCS :----------------");
 
-        System.out.println("\n-----------UCS :----------------");
-
-        // check frienge UCS
-        while (!fringe2.get_Fringe().isEmpty()) {
-            Node test_Node = fringe2.get_Fringe().get(0);
-            fringe2.get_Fringe().remove(0);
-            if (goal_node == test_Node.getNodeState()) {
-                // show expanded nodes
-                show_expandedNodes_UCS(expand);
-                // show path
-                Node path = test_Node;
-                show_path_UCS(path);
-                break;
-            } else {
-                expand.add_expand_UCS(test_Node, proximityArray, fringe2);
+            // check frienge UCS
+            while (!fringe2.get_Fringe().isEmpty()) {
+                Node test_Node = fringe2.get_Fringe().get(0);
+                fringe2.get_Fringe().remove(0);
+                if (goal_node == test_Node.getNodeState()) {
+                    // show expanded nodes
+                    show_expandedNodes_UCS(expand);
+                    // show path
+                    Node path = test_Node;
+                    show_path_UCS(path);
+                    break;
+                } else {
+                    expand.add_expand_UCS(test_Node, proximityArray, fringe2);
+                }
             }
         }
 
     }
 
-    // -------------------------------- our methods for show matrix and expanded nodes and path --------------------------------------------------
+    // -------------------------------- our methods for show matrix and expanded nodes and path ---------------------------------------
 
     public static void show_Nodes(int matrixSize) {
         System.out.println();
@@ -169,5 +177,5 @@ public class treeSearch {
         System.out.println();
     }
 
-// -------------------------------------------------------------------------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------------------------------------------------------------------------
 }
