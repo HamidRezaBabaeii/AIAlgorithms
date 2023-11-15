@@ -1,2 +1,2 @@
 # AIAlgorithms
-Implementation AI algorithms
+Implementation AI algorithms like BFS and UCS by use TreeSearch
