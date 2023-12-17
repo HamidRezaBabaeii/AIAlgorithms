@@ -8,11 +8,11 @@ public class EightMinister {
     static Random rand = new Random();
     private static ArrayList<Float> avrage_of_fitness_in_each_generation = new ArrayList<>();
     private static ArrayList<ArrayList<Integer>> best_chromosome_in_each_generation = new ArrayList<>();
-    private ArrayList<ArrayList<Integer>> generation_chromosomes = new ArrayList<>();
+    private static ArrayList<ArrayList<Integer>> answers = new ArrayList<>();
 
     public static void main(String[] args) {
         Scanner Get_Value = new Scanner(System.in);
-        //ArrayList<ArrayList<Integer>> generation_chromosomes = new ArrayList<>();
+
         // GET INITIAL POPULATION
         System.out.print("Please Enter the number of initial population:");
         int n_population = Get_Value.nextInt();
@@ -35,49 +35,45 @@ public class EightMinister {
 
         // Generate Initial Generation
         NewGeneration generation = new NewGeneration(n_population, n_Queen);
-        generation.generate_Chromosomes();    
+        generation.generate_Chromosomes();
         fitness(generation.getGeneration(), n_Queen);
 
         // loop for create nth new generation
-    
+
         for (int i = 1; i < n_new_generation; i++) {
-            
+
             // selection level
-            ArrayList<ArrayList<Integer>> tournomentTeam = new ArrayList<>();           
+            ArrayList<ArrayList<Integer>> tournomentTeam = new ArrayList<>();
             ArrayList<ArrayList<Integer>> new_generation = new ArrayList<>();
-            
-            
+
             // create tournoment team
-            for(int u=1 ; u<=teamSize ; u++)
-            {
+            for (int u = 1; u <= teamSize; u++) {
                 int index = rand.nextInt(n_population);
                 tournomentTeam.add(generation.getGeneration().get(index)); // error
             }
             // select two random chromosome from tournomentTeam
 
-                // under line is literacy rate, in this solution is %1 from 100 population.
-                new_generation.add(best_chromosome_in_each_generation.get(i-1));
-                //  we should clear() generation_chromosomes array list
-                //generation_chromosomes.clear();
+            // under line is literacy rate, in this solution is %1 from 100 population.
+            new_generation.add(best_chromosome_in_each_generation.get(i - 1));
+            // we should clear() generation_chromosomes array list
+            // generation_chromosomes.clear();
 
             // add 2 to 100 chromosome via cross over method
-            for(int u=1 ; u<n_population ; u++)
-            {
+            for (int u = 1; u < n_population; u++) {
                 ArrayList<Integer> new_child = new ArrayList<>();
                 ArrayList<ArrayList<Integer>> two_parent_chromosome = new ArrayList<>();
-                for(int uu=0 ; uu<2 ; uu++)
-                {
+                for (int uu = 0; uu < 2; uu++) {
                     int index = rand.nextInt(teamSize);
                     two_parent_chromosome.add(tournomentTeam.get(index));
                 }
-                // cross over --> I changed it instead of create two new chromosome I create one new chromosome from 2 parent
-                int crossOverPoint = rand.nextInt(n_Queen-1) + 1;
-                for(int uu=0 ; uu<n_Queen ; uu++)
-                {
-                    if(uu < crossOverPoint)
+                // cross over --> I changed it instead of create two new chromosome I create one
+                // new chromosome from 2 parent
+                int crossOverPoint = rand.nextInt(n_Queen - 1) + 1;
+                for (int uu = 0; uu < n_Queen; uu++) {
+                    if (uu < crossOverPoint)
                         new_child.add(two_parent_chromosome.get(0).get(uu));
-                    
-                    if(uu >= crossOverPoint)
+
+                    if (uu >= crossOverPoint)
                         new_child.add(two_parent_chromosome.get(1).get(uu));
                 }
 
@@ -89,7 +85,7 @@ public class EightMinister {
 
                 // add new child to new generation
                 new_generation.add(new_child);
-                two_parent_chromosome.clear();  
+                two_parent_chromosome.clear();
             }
             generation.setnewGeneration(new_generation);
             fitness(generation.getGeneration(), n_Queen);
@@ -99,11 +95,18 @@ public class EightMinister {
 
         }
 
-        for(int i=0 ; i<best_chromosome_in_each_generation.size(); i++)
-        {
-            System.out.println("Generation " + (i+1) + ":");
-            System.out.println("\tAverage of fitness: "+avrage_of_fitness_in_each_generation.get(i));           
-            System.out.println("\tAverage of fitness: " + best_chromosome_in_each_generation.get(i));
+        if (!answers.isEmpty()) {
+            System.out.println("The answers are:");
+
+            for (int i = 0; i < answers.size(); i++) {
+                System.out.println("\t" + answers.get(i));
+            }
+        }
+        System.out.println("");
+        for (int i = 0; i < best_chromosome_in_each_generation.size(); i++) {
+            System.out.println("Generation " + (i + 1) + ":");
+            System.out.println("\tAverage of fitness: " + avrage_of_fitness_in_each_generation.get(i));
+            System.out.println("\tBest chromosome :: " + best_chromosome_in_each_generation.get(i));
 
         }
 
@@ -119,10 +122,14 @@ public class EightMinister {
 
         for (int k = 0; k < generation_chromosomes.size(); k++) {
             ArrayList<Integer> row = new ArrayList<>();
+            ArrayList<Integer> column = new ArrayList<>();
             ArrayList<Integer> northEastDiagonal = new ArrayList<>();
             ArrayList<Integer> southEastDiagonal = new ArrayList<>();
             for (int i = 0; i < generation_chromosomes.get(k).size(); i++) {
                 if (!row.contains(generation_chromosomes.get(k).get(i))) {
+                    row.add(generation_chromosomes.get(k).get(i));
+                }
+                if (!column.contains(i)) {
                     row.add(generation_chromosomes.get(k).get(i));
                 }
                 if (!southEastDiagonal.contains(generation_chromosomes.get(k).get(i) + i)) {
@@ -133,21 +140,21 @@ public class EightMinister {
                 }
             }
 
-            int t_fitness = row.size() + northEastDiagonal.size() + southEastDiagonal.size();
+            int t_fitness = row.size() + northEastDiagonal.size() + southEastDiagonal.size() + column.size();
             if (t_fitness > maxFitness) {
                 wich_k = k;
                 maxFitness = t_fitness;
             }
             fitness_of_chromosome.add(t_fitness);
+            //
+            if (n_Queen * 4 == t_fitness) {
+                // System.out.println("The answer is:");
+                // System.out.println(generation_chromosomes.get(wich_k));
+                // System.out.println("This chromosome is answer of problem");
+                answers.add(generation_chromosomes.get(k));
+            }
         }
 
-        //
-        if (n_Queen * 3 == maxFitness) {
-            System.out.println("The answer is:");
-            System.out.println(generation_chromosomes.get(wich_k));
-            System.out.println("This chromosome is answer of problem");
-            return;
-        }
         best_chromosome_in_each_generation.add(generation_chromosomes.get(wich_k));
 
         float average = 0;
