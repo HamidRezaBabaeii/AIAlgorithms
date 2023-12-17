@@ -71,7 +71,7 @@ public class EightMinister {
                     two_parent_chromosome.add(tournomentTeam.get(index));
                 }
                 // cross over --> I changed it instead of create two new chromosome I create one new chromosome from 2 parent
-                int crossOverPoint = rand.nextInt(n_Queen);
+                int crossOverPoint = rand.nextInt(n_Queen-1) + 1;
                 for(int uu=0 ; uu<n_Queen ; uu++)
                 {
                     if(uu < crossOverPoint)
@@ -95,8 +95,15 @@ public class EightMinister {
             fitness(generation.getGeneration(), n_Queen);
             // generation_chromosomes1.clear();
             // generation_chromosomes1 = new_generation;
-            System.out.println(best_chromosome_in_each_generation.get(0) + " / " + best_chromosome_in_each_generation.get(1));
             new_generation.clear();
+
+        }
+
+        for(int i=0 ; i<best_chromosome_in_each_generation.size(); i++)
+        {
+            System.out.println("Generation " + (i+1) + ":");
+            System.out.println("\tAverage of fitness: "+avrage_of_fitness_in_each_generation.get(i));           
+            System.out.println("\tAverage of fitness: " + best_chromosome_in_each_generation.get(i));
 
         }
 
