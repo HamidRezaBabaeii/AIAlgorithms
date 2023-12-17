@@ -24,6 +24,17 @@ public class NewGeneration {
         this.generation = generation;
     }
 
+    // set new generation
+    
+    public void setnewGeneration(ArrayList<ArrayList<Integer>> generation) {
+        this.generation.clear();
+        for(int i=0 ; i<generation.size() ; i++)
+        {
+            this.generation.add(generation.get(i));
+        }
+        
+    }
+
     // generate chromosomes or generation
     public void generate_Chromosomes(){
         for(int i=0 ; i<n_chromosome ; i++)
