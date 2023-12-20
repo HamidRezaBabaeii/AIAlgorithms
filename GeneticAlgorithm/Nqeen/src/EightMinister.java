@@ -1,11 +1,22 @@
-package AIAlgorithms.GeneticAlgorithm;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
+public class EightMinister extends JFreeChart {
+    public EightMinister(Plot plot) {
+        super(plot);
+        // TODO Auto-generated constructor stub
+    }
 
-public class EightMinister {
     static Random rand = new Random();
     private static ArrayList<Float> avrage_of_fitness_in_each_generation = new ArrayList<>();
     private static ArrayList<ArrayList<Integer>> best_chromosomes_in_each_generation = new ArrayList<>();
@@ -45,6 +56,11 @@ public class EightMinister {
         if (literacyrate % 2 != 0) {
             literacyrate -= 1;
         }
+
+        System.out.print("Please Enter mutation rate(Note:best number is %5): ");
+        int mutationRate = Get_Value.nextInt();
+        System.out.println();
+
         // Generate Initial Generation
         NewGeneration generation = new NewGeneration(n_population, n_Queen);
         generation.generate_Chromosomes();
@@ -78,7 +94,7 @@ public class EightMinister {
             // generation_chromosomes.clear();
 
             // add 2 to 100 chromosome via cross over method
-            for (int u = literacyrate/2; u < n_population / 2; u++) {
+            for (int u = literacyrate / 2; u < n_population / 2; u++) {
                 ArrayList<Integer> new_child = new ArrayList<>();
                 ArrayList<Integer> new_child1 = new ArrayList<>();
                 ArrayList<ArrayList<Integer>> two_parent_chromosome = new ArrayList<>();
@@ -104,14 +120,14 @@ public class EightMinister {
 
                 // mutation
                 int rate = rand.nextInt(99);
-                if (rate < 5) {
+                if (rate < mutationRate) {
                     int new_gen = rand.nextInt(n_Queen);
                     int gen_place = rand.nextInt(n_Queen);
                     new_child.remove(gen_place);
                     new_child.add(gen_place, new_gen);
                 }
                 rate = rand.nextInt(99);
-                if (rate < 5) {
+                if (rate < mutationRate) {
                     int new_gen = rand.nextInt(n_Queen);
                     int gen_place = rand.nextInt(n_Queen);
                     new_child1.remove(gen_place);
@@ -119,7 +135,7 @@ public class EightMinister {
                 }
 
                 // add new child to new generation
-                new_generation.add(new_child);            
+                new_generation.add(new_child);
                 new_generation.add(new_child1);
                 two_parent_chromosome.clear();
             }
@@ -130,32 +146,72 @@ public class EightMinister {
             new_generation.clear();
 
         }
-
-
+        String ans = "There is no answer!";
         if (!answers.isEmpty()) {
             System.out.println("The answers are:");
-
+            int gn = avrage_of_fitness_in_each_generation.size() - 1;
+            ans = "Answer is in Generation " + String.valueOf(gn);
             for (int i = 0; i < answers.size(); i++) {
                 System.out.println("\t" + answers.get(i));
             }
         }
-        System.out.println("");
-        for (int i = 0; i < best_chromosomes_fitness_in_each_generation.size(); i++) {
-            System.out.println("Generation " + (i + 1) + ":");
-            System.out.println("\tAverage of fitness: " + avrage_of_fitness_in_each_generation.get(i));
-            System.out.println("\tBest chromosome : " + best_chromosomes_fitness_in_each_generation.get(i));
 
+        // System.out.println("");
+        // for (int i = 0; i < best_chromosomes_fitness_in_each_generation.size(); i++)
+        // {
+        // System.out.println("Generation " + (i + 1) + ":");
+        // System.out.println("\tAverage of fitness: " +
+        // avrage_of_fitness_in_each_generation.get(i));
+        // System.out.println("\tBest chromosome : " +
+        // best_chromosomes_fitness_in_each_generation.get(i));
+
+        // }
+
+        // chart of average
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        for (int i = 0; i < best_chromosomes_fitness_in_each_generation.size(); i++) {
+            String generatioString = String.valueOf(i);
+            dataset.setValue(avrage_of_fitness_in_each_generation.get(i), "Average of fitness", generatioString);
         }
+        String header = "P:" + String.valueOf(n_population) + " G:" + String.valueOf(n_new_generation) + " Q:"
+                + String.valueOf(n_Queen) + " TS:" + String.valueOf(teamSize) + " LR:" + String.valueOf(literacyrate) + " MR:" + String.valueOf(mutationRate);
+        JFreeChart chart = ChartFactory.createLineChart(header, "Generations", "Average of fitness", dataset,
+                PlotOrientation.VERTICAL, false, true, false);
+        chart.setBackgroundPaint(Color.WHITE);
+        CategoryPlot p = chart.getCategoryPlot();
+        p.setRangeGridlinePaint(Color.BLACK);
+        ChartFrame frame = new ChartFrame("Bar Chart For Average of Each Generation Fitness ", chart);
+        frame.setVisible(true);
+        frame.setSize(700, 600);
+
+        // chart of fitness of each best chromosome
+        DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
+        for (int i = 0; i < best_chromosomes_fitness_in_each_generation.size(); i++) {
+            String generatioString = String.valueOf(i);
+            dataset2.setValue(best_chromosomes_fitness_in_each_generation.get(i), "Average of fitness",
+                    generatioString);
+        }
+
+        JFreeChart chart2 = ChartFactory.createLineChart(ans, "Generations", "Best Fitness", dataset2,
+                PlotOrientation.VERTICAL, false, true, false);
+        chart2.setBackgroundPaint(Color.WHITE);
+        CategoryPlot p2 = chart2.getCategoryPlot();
+        p2.setRangeGridlinePaint(Color.BLACK);
+        ChartFrame frame2 = new ChartFrame("Bar Chart For Average of Each Generation Fitness ", chart2);
+        frame2.setVisible(true);
+        frame2.setSize(700, 600);
+        ;
 
     }
 
+    // Fitness method
     public static void fitness(ArrayList<ArrayList<Integer>> generation_chromosomes, int n_Queen, int literacyrate) {
 
         // store fitness of each chromosome in generation
         ArrayList<Integer> fitness_of_chromosome = new ArrayList<>();
         // maximum fitness along with its location in arraylist
         int maxFitness = 0;
-        int wich_k = 0;
+        //int wich_k = 0;
         int array[][] = new int[generation_chromosomes.size()][2];
         for (int k = 0; k < generation_chromosomes.size(); k++) {
             ArrayList<Integer> row = new ArrayList<>();
@@ -181,7 +237,7 @@ public class EightMinister {
             array[k][0] = k;
             array[k][1] = t_fitness;
             if (t_fitness > maxFitness) {
-                wich_k = k;
+                //wich_k = k;
                 maxFitness = t_fitness;
             }
             fitness_of_chromosome.add(t_fitness);
