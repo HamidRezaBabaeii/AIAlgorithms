@@ -1,4 +1,4 @@
-package AIAlgorithms.GeneticAlgorithm;
+package AIAlgorithms.GeneticAlgorithm.Rawcodes;
 
 import java.util.ArrayList;
 
