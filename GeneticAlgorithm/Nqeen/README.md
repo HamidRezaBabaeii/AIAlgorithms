@@ -1,18 +1,12 @@
-## Getting Started
+## Genetic Algorithm for solving N-Queen problem
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+#This project has 5 parameters:
 
-## Folder Structure
+    1- the first is number of population.
+    2- the second is number of Queens.
+    3- the number of Generation that Algorithm will have generated. 
+    4- the Team size
+    5- the Elite rate
+    6- the Mutation rate
 
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+I have used Tournament approach and Cross Over Poin in this algorithm.
