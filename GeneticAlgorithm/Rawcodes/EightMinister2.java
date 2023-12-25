@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-
-
 public class EightMinister2 {
     static Random rand = new Random();
     private static ArrayList<Float> avrage_of_fitness_in_each_generation = new ArrayList<>();
@@ -50,88 +48,8 @@ public class EightMinister2 {
         NewGeneration generation = new NewGeneration(n_population, n_Queen);
         generation.generate_Chromosomes();
         fitness(generation.getGeneration(), n_Queen, literacyrate);
-
+        Tournoment(teamSize, n_population, n_Queen, n_new_generation, literacyrate, generation);
         // loop for create nth new generation
-
-        for (int i = 1; i < n_new_generation; i++) {
-
-            if (!answers.isEmpty()) {
-                break;
-            }
-
-            // selection level
-            ArrayList<ArrayList<Integer>> tournomentTeam = new ArrayList<>();
-            ArrayList<ArrayList<Integer>> new_generation = new ArrayList<>();
-
-            // create tournoment team
-            for (int u = 1; u <= teamSize; u++) {
-                int index = rand.nextInt(n_population);
-                tournomentTeam.add(generation.getGeneration().get(index)); // error
-            }
-            // select two random chromosome from tournomentTeam
-
-            // under line is literacy rate, in this solution is %1 from 100 population.
-            for (int x = 0; x < literacyrate; x++) {
-                new_generation.add(best_chromosomes_in_each_generation.get(x));
-            }
-            best_chromosomes_in_each_generation.clear();
-            // we should clear() generation_chromosomes array list
-            // generation_chromosomes.clear();
-
-            // add 2 to 100 chromosome via cross over method
-            for (int u = literacyrate/2; u < n_population / 2; u++) {
-                ArrayList<Integer> new_child = new ArrayList<>();
-                ArrayList<Integer> new_child1 = new ArrayList<>();
-                ArrayList<ArrayList<Integer>> two_parent_chromosome = new ArrayList<>();
-                for (int uu = 0; uu < 2; uu++) {
-                    int index = rand.nextInt(teamSize);
-                    two_parent_chromosome.add(tournomentTeam.get(index));
-                }
-                // cross over --> I changed it instead of create two new chromosome I create one
-                // new chromosome from 2 parent
-                int crossOverPoint = rand.nextInt(n_Queen - 1) + 1;
-                for (int uu = 0; uu < n_Queen; uu++) {
-                    if (uu < crossOverPoint) {
-                        new_child1.add(two_parent_chromosome.get(1).get(uu));
-                        new_child.add(two_parent_chromosome.get(0).get(uu));
-                    }
-
-                    if (uu >= crossOverPoint) {
-                        new_child1.add(two_parent_chromosome.get(0).get(uu));
-                        new_child.add(two_parent_chromosome.get(1).get(uu));
-                    }
-
-                }
-
-                // mutation
-                int rate = rand.nextInt(99);
-                if (rate < 5) {
-                    int new_gen = rand.nextInt(n_Queen);
-                    int gen_place = rand.nextInt(n_Queen);
-                    new_child.remove(gen_place);
-                    new_child.add(gen_place, new_gen);
-                }
-                rate = rand.nextInt(99);
-                if (rate < 5) {
-                    int new_gen = rand.nextInt(n_Queen);
-                    int gen_place = rand.nextInt(n_Queen);
-                    new_child1.remove(gen_place);
-                    new_child1.add(gen_place, new_gen);
-                }
-
-                // add new child to new generation
-                new_generation.add(new_child);            
-                new_generation.add(new_child1);
-                two_parent_chromosome.clear();
-            }
-            generation.setnewGeneration(new_generation);
-            fitness(generation.getGeneration(), n_Queen, literacyrate);
-            // generation_chromosomes1.clear();
-            // generation_chromosomes1 = new_generation;
-            new_generation.clear();
-
-        }
-
 
         if (!answers.isEmpty()) {
             System.out.println("The answers are:");
@@ -219,4 +137,96 @@ public class EightMinister2 {
         avrage_of_fitness_in_each_generation.add(average / fitness_of_chromosome.size());
         fitness_of_chromosome.clear();
     }
+
+    public static void Tournoment(int teamSize, int n_population, int n_Queen, int n_new_generation, int literacyrate,
+            NewGeneration generation) {
+        for (int i = 1; i < n_new_generation; i++) {
+
+            if (!answers.isEmpty()) {
+                break;
+            }
+
+            // selection level
+            ArrayList<ArrayList<Integer>> tournomentTeam = new ArrayList<>();
+            ArrayList<ArrayList<Integer>> new_generation = new ArrayList<>();
+
+            // create tournoment team
+            for (int u = 1; u <= teamSize; u++) {
+                int index = rand.nextInt(n_population);
+                tournomentTeam.add(generation.getGeneration().get(index)); // error
+            }
+            // select two random chromosome from tournomentTeam
+
+            // under line is literacy rate, in this solution is %1 from 100 population.
+            for (int x = 0; x < literacyrate; x++) {
+                new_generation.add(best_chromosomes_in_each_generation.get(x));
+            }
+            best_chromosomes_in_each_generation.clear();
+            // we should clear() generation_chromosomes array list
+            // generation_chromosomes.clear();
+
+            // add 2 to 100 chromosome via cross over method
+            for (int u = literacyrate / 2; u < n_population / 2; u++) {
+                ArrayList<Integer> new_child = new ArrayList<>();
+                ArrayList<Integer> new_child1 = new ArrayList<>();
+                ArrayList<ArrayList<Integer>> two_parent_chromosome = new ArrayList<>();
+                for (int uu = 0; uu < 2; uu++) {
+                    int index = rand.nextInt(teamSize);
+                    two_parent_chromosome.add(tournomentTeam.get(index));
+                }
+                // cross over --> I changed it instead of create two new chromosome I create one
+                // new chromosome from 2 parent
+                int crossOverPoint = rand.nextInt(n_Queen - 1) + 1;
+                for (int uu = 0; uu < n_Queen; uu++) {
+                    if (uu < crossOverPoint) {
+                        new_child1.add(two_parent_chromosome.get(1).get(uu));
+                        new_child.add(two_parent_chromosome.get(0).get(uu));
+                    }
+
+                    if (uu >= crossOverPoint) {
+                        new_child1.add(two_parent_chromosome.get(0).get(uu));
+                        new_child.add(two_parent_chromosome.get(1).get(uu));
+                    }
+
+                }
+
+                // mutation
+                int rate = rand.nextInt(99);
+                if (rate < 5) {
+                    int new_gen = rand.nextInt(n_Queen);
+                    int gen_place = rand.nextInt(n_Queen);
+                    new_child.remove(gen_place);
+                    new_child.add(gen_place, new_gen);
+                }
+                rate = rand.nextInt(99);
+                if (rate < 5) {
+                    int new_gen = rand.nextInt(n_Queen);
+                    int gen_place = rand.nextInt(n_Queen);
+                    new_child1.remove(gen_place);
+                    new_child1.add(gen_place, new_gen);
+                }
+
+                // add new child to new generation
+                new_generation.add(new_child);
+                new_generation.add(new_child1);
+                two_parent_chromosome.clear();
+            }
+            generation.setnewGeneration(new_generation);
+            fitness(generation.getGeneration(), n_Queen, literacyrate);
+            // generation_chromosomes1.clear();
+            // generation_chromosomes1 = new_generation;
+            new_generation.clear();
+
+        }
+
+    }
+
+    public static void RouletteWheel(int teamSize, int n_population, int n_Queen, int n_new_generation,
+            int literacyrate, NewGeneration generation) {
+        for (int i = 1; i < n_new_generation; i++) {
+            
+        }
+
+    }
+
 }
